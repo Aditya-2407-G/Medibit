@@ -13,8 +13,8 @@ export default function Index() {
 
                 <View className="flex items-center justify-center min-h-[85vh]">
                     <Text className="text-white font-bold text-3xl p-10 mb-20">Welcome to Medibit !</Text>
-                    <CustomButton title="Sign in" handlePress={() => router.push("/Signin")} containerStyles="w-full mb-10" textStyles={undefined} isLoading={undefined} />
-                    <CustomButton title="Sign up" handlePress={() => router.push("/Signup")} containerStyles="w-full" textStyles={undefined} isLoading={undefined} />
+                    <CustomButton title="Sign In" handlePress={() => router.push("/Signin")} containerStyles="w-full mb-10" textStyles={undefined} isLoading={undefined} />
+                    <CustomButton title="Sign Up" handlePress={() => router.push("/Signup")} containerStyles="w-full" textStyles={undefined} isLoading={undefined} />
                 </View>
                 
 
