@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { Signin } from "../../lib/appwrite";
 
-const Signin = () => {
+const SignIn = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -14,12 +15,26 @@ const Signin = () => {
   const [isSubmitting, setSubmitting] = useState(false);
 
   const submit = async () => {
-    if (form.email === "" || form.password === "") {
-      Alert.alert("Please fill all fields");
+
+    if(!form.email || !form.password){
+      Alert.alert("Error", "Please fill all fields");
       return;
     }
     setSubmitting(true);
-  };
+    
+    try {
+
+      await Signin(form.email, form.password);
+      
+      router.replace("/Home")
+      
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+    finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -70,4 +85,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default SignIn;
