@@ -28,11 +28,10 @@ const TabIcon = ({ icon, color, name, focused }: any) => {
 const TabLayout = () => {
   const { loading, isLogged } = useGlobalContext();
 
-  // check if needed or not 
-    if (!isLogged) return <Redirect href="/Signin" />;
+  // check if needed or not
+  if (!isLogged) return <Redirect href="/Signin" />;
 
   return (
-
     <>
       <Loader isLoading={loading} />
       <StatusBar backgroundColor="#161622" style="light" />
@@ -59,6 +58,21 @@ const TabLayout = () => {
                 icon={icons.home}
                 color={color}
                 name="Home"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="Workout"
+          options={{
+            title: "Workout",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.crossfit}
+                color={color}
+                name="Workout"
                 focused={focused}
               />
             ),
