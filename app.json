@@ -36,7 +36,8 @@
           "microphonePermission": "Allow Medibit to access your microphone",
           "recordAudioAndroid": true
         }
-      ]
+      ],
+      "expo-document-picker"
     ],
     "experiments": {
       "typedRoutes": true
