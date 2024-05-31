@@ -12,6 +12,8 @@ client
   .setPlatform(appwriteConfig.platform);
 const storage = new Storage(client);
 
+// file uploader 
+
 const FileUploader = () => {
   const [fileUri, setFileUri] = useState<string>('');
   const [fileName, setFileName] = useState<string>('');
