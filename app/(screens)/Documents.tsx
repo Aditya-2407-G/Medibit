@@ -69,6 +69,8 @@ const FileUploader = () => {
     }
 }
 
+//file preview
+
 const previewFile = async () => {
 
         const file = viewFile();
