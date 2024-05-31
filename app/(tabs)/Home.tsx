@@ -18,6 +18,10 @@ const Home = () => {
   const handleScanQR = () => {
     router.push("../ScanQR");
   };
+  const handleDocuments = () => {
+    router.push("../Documents");
+  }
+
 
   return (
     <SafeAreaView className="bg-primary h-full flex justify-center p-4">
@@ -36,7 +40,7 @@ const Home = () => {
 
         <CustomButton
           title="Documents"
-          handlePress={undefined}
+          handlePress={handleDocuments}
           containerStyles="w-full mb-10"
           textStyles={undefined}
           isLoading={undefined}
