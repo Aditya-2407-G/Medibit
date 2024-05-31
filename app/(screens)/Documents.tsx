@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, StyleSheet, ToastAndroid } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
-import { appwriteConfig, fileUploader } from '@/lib/appwrite';
-import { Storage, Client, ID } from 'react-native-appwrite';
-
-// Initialize Appwrite Client
-const client = new Client();
-client
-  .setEndpoint(appwriteConfig.endpoint)
-  .setProject(appwriteConfig.projectId)
-  .setPlatform(appwriteConfig.platform);
-const storage = new Storage(client);
-
-// file uploader 
+import { fileUploader, viewFile } from '@/lib/appwrite';
 
 const FileUploader = () => {
   const [fileUri, setFileUri] = useState<string>('');
@@ -34,6 +23,8 @@ const FileUploader = () => {
         setFileUri(uri);
         setFileType(mimeType!);
         console.log(name, size, uri, mimeType);
+
+        ToastAndroid.show("File selected successfully", ToastAndroid.SHORT)
       } else {
         console.log('File picking cancelled');
       }
@@ -51,23 +42,21 @@ const FileUploader = () => {
     }
 
     try {
-
-        const nameOfFile = fileName.substring(fileName.lastIndexOf('/') + 1);
         
         // Create an object with properties name, type, size, and uri
         const fileData = {
-            name: nameOfFile,
+            name: Date.now()+fileName,
             type: fileType,
             size: fileSize!,
-            uri: fileUri // or you can use uri here, depends on how you use it elsewhere
+            uri: fileUri 
         };
 
-        // Pass the fileData object to createFile function
-        const ref = storage.createFile(appwriteConfig.storageId, ID.unique(), fileData);
+
+        const ref = fileUploader(fileData);
 
         ref.then((response) => {
             console.log('File uploaded successfully:', response);
-            Alert.alert('Success', 'File uploaded successfully.');
+            ToastAndroid.show("File uploaded successfully", ToastAndroid.SHORT)
         }).catch((error) => {
             console.error('Error uploading file:', error);
             Alert.alert('Error', `Failed to upload file. ${error}`);
@@ -80,38 +69,32 @@ const FileUploader = () => {
     }
 }
 
+//file preview
+
+const previewFile = async () => {
+
+        const file = viewFile();
+        console.log(file);
+        
+}
+
 
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={pickFile}>
-        <Text style={styles.buttonText}>Pick a File</Text>
+    <View className='flex justify-center align-middle'>
+      <TouchableOpacity className='bg-red-400 px-10 py-20 rounded-md text-center m-10' onPress={pickFile}>
+        <Text className='text-white font-bold'>Pick a File</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={uploadFile}>
-        <Text style={styles.buttonText}>Upload a File</Text>
+      <TouchableOpacity className='bg-red-400 px-10 py-20 rounded-md text-center m-10' onPress={uploadFile}>
+        <Text className='text-white font-bold'>Upload a File</Text>
       </TouchableOpacity>
+      <TouchableOpacity className='bg-red-400 px-10 py-20 rounded-md text-center m-10' onPress={previewFile}>
+        <Text className='text-white font-bold'>Preview File</Text>
+      </TouchableOpacity>
+
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    backgroundColor: '#B08',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    alignItems: 'center',
-    margin: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-});
 
 export default FileUploader;
