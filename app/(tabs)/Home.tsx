@@ -1,5 +1,5 @@
 import CustomButton from "@/components/CustomButton";
-import { getAccount, getCurrentUser } from "@/lib/appwrite";
+import { getAccount} from "@/lib/appwrite";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";

@@ -21,6 +21,12 @@ const ScreenLayout = () => {
             headerShown: false,
           }}
           />
+          <Stack.Screen
+            name="DisplayDocuments"
+            options={{
+              headerShown: false,
+            }}
+          />
       </Stack>
     </>
   );
