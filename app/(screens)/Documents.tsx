@@ -11,13 +11,14 @@ import {
 import * as DocumentPicker from "expo-document-picker";
 import { userFileUploader, viewDocument } from "@/lib/appwrite";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const FileUploader = () => {
   const [fileUri, setFileUri] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [fileType, setFileType] = useState<string>("");
   const [fileSize, setFileSize] = useState<number>();
-  const [uploading, setUploading] = useState<boolean>(false);
+  const [uploading, setUploading] = useState(false);
 
   const pickFile = async () => {
     try {
@@ -44,13 +45,16 @@ const FileUploader = () => {
   };
 
   const uploadUserFile = async () => {
+
     if (!fileUri) {
       Alert.alert("Error", "Please pick a file first.");
       return;
     }
 
     try {
+
       setUploading(true);
+
       const fileData = {
         name: fileName,
         type: fileType,
@@ -59,7 +63,7 @@ const FileUploader = () => {
       };
 
       const ref = userFileUploader(fileData);
-
+      
       ref
         .then(() => {
           console.log("File uploaded successfully");
@@ -68,13 +72,13 @@ const FileUploader = () => {
         .catch((error) => {
           console.error("Error uploading file:", error);
           Alert.alert("Error", `Failed to upload file. ${error}`);
+        }).finally(() => {
+          setUploading(false);
         });
     } catch (error) {
       console.log("Error uploading file:", error);
       Alert.alert("Error", `Failed to upload file. ${error}`);
-    } finally {
-      setUploading(false);
-    }
+    } 
   };
 
   const previewFile = async () => {
@@ -91,45 +95,51 @@ const FileUploader = () => {
   };
 
   return (
-    <View className="flex-1 justify-center bg-primary">
+    <SafeAreaView className="flex-1 justify-center h-full bg-primary">
+
+      <View className="flex-col justify-center">
       <TouchableOpacity
         className="bg-secondary-200 px-10 py-10 rounded-md text-center m-10"
         onPress={pickFile}
       >
-        <Text className="text-black font-bold">Pick a File</Text>
+        <Text className="text-black font-bold text-center">Pick a File</Text>
       </TouchableOpacity>
       <TouchableOpacity
         className="bg-secondary-200 px-10 py-10 rounded-md text-center m-10"
         onPress={previewFile}
       >
-        <Text className="text-black font-bold">Preview File</Text>
+        <Text className="text-black font-bold text-center">Preview File</Text>
       </TouchableOpacity>
       <TouchableOpacity
         className="bg-secondary-200 px-10 py-10 rounded-md text-center m-10"
         onPress={uploadUserFile}
       >
-        <Text className="text-black font-bold">User File Uploader</Text>
+        <Text className="text-black font-bold text-center">User File Uploader</Text>
       </TouchableOpacity>
       <TouchableOpacity
         className="bg-secondary-200 px-10 py-10 rounded-md text-center m-10"
         onPress={DocumentRoute}
       >
-        <Text className="text-black font-bold">Uploaded Documents</Text>
+        <Text className="text-black font-bold text-center">Uploaded Documents</Text>
       </TouchableOpacity>
+
+      </View>
+
       {uploading && (
         <View style={styles.loadingOverlay}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="white" />
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
+
 
 const styles = StyleSheet.create({
   loadingOverlay: {
     position: "absolute",
     top: 0,
-    left: 0,
+    left: 0,  
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0,0,0,0.5)",

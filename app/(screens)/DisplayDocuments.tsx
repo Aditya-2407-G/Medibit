@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  StyleSheet,
   ActivityIndicator,
   ToastAndroid,
 } from "react-native";
@@ -13,7 +14,6 @@ import { deleteFile, getFileUri, viewDocument } from "@/lib/appwrite";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButton from "@/components/CustomButton";
 
 const DisplayDocuments = () => {
   const [userFiles, setUserFiles] = useState<any[]>([]);
@@ -144,16 +144,27 @@ const DisplayDocuments = () => {
         <Text className="text-center text-white">No files found</Text>
       )}
     />
-      {/* Loading icon */}
-      {downloading && (
-        <ActivityIndicator
-          style={{ marginTop: 10 }}
-          size="large"
-          color="#0000ff"
-        />
+          {downloading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="white" />
+        </View>
       )}
     </SafeAreaView>
   );
 };
+
+
+const styles = StyleSheet.create({
+  loadingOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,  
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 export default DisplayDocuments;
