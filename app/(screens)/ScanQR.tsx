@@ -3,12 +3,13 @@ import React from 'react';
 import { useState } from 'react';
 import { Alert, Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';  
+import { router } from 'expo-router';
 
 const  ScanQR = () => {
 
   const [permission, requestPermission] = useCameraPermissions();
   const [flashState, setFlashState] = useState(false);
-  const [scanned, setScanned] = useState(false);
+  const [scanned, setScanned] = useState(true);
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -29,17 +30,26 @@ const  ScanQR = () => {
     setFlashState(current => !current);
   }
 
-  const handleBarCodeScanned = ({ data }:{data:string}) => {
-    setScanned(true);
-    Alert.alert(`Bar code data ${data} has been scanned!`);
-    // Optionally, you can process the scanned data here
-    setTimeout(() => setScanned(false), 3000);
+  const handleBarCodeScanned = ({data}: {data:any}) => {
+    
+      const scannedData = data;
+      setScanned(false);
+      
+      Alert.alert(`Bar code data ${data} has been scanned!`);
+
+      if(data) {
+        router.push({
+          pathname: '/Transfer',
+          params: {item : scannedData}
+        })
+    }
+          
   };
 
 
   return (
 
-      <CameraView className='flex-1' facing= "back" enableTorch={flashState} onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} barcodeScannerSettings={{
+      <CameraView className='flex-1' facing= "back" enableTorch={flashState} onBarcodeScanned={scanned ? handleBarCodeScanned : undefined} barcodeScannerSettings={{
         barcodeTypes:['qr']
       }}>
         <View className='flex-1 flex-row justify-center items-end mb-10'>
@@ -53,6 +63,9 @@ const  ScanQR = () => {
             )}
             
           </TouchableOpacity>
+          <Button title='Scan Again? ' onPress={() => {
+            setScanned(true);
+          }}/>
 
 
         </View>
@@ -60,6 +73,7 @@ const  ScanQR = () => {
 
   );
 }
+
 
 export default ScanQR;
 

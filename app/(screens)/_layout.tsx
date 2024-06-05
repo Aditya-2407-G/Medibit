@@ -27,6 +27,12 @@ const ScreenLayout = () => {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+          name="Transfer"
+          options={{
+            headerShown: false,
+          }}
+          />
       </Stack>
     </>
   );
