@@ -110,7 +110,7 @@ const DisplayDocuments = () => {
         <TouchableOpacity
           onPress={() => handleFileDownload(item.name, item.$id)}
           disabled={downloading}
-          className="bg-secondary-200 px-4 py-2 rounded-md ml-6"
+          className="bg-purple-200 px-4 py-2 rounded-md ml-6"
         >
           <Text>Download</Text>
         </TouchableOpacity>
@@ -118,7 +118,7 @@ const DisplayDocuments = () => {
         <TouchableOpacity
           onPress={() => handleFileDelete(item.$id)}
           disabled={downloading}
-          className="bg-secondary-200 px-4 py-2 rounded-md ml-2"
+          className="bg-purple-200 px-4 py-2 rounded-md ml-2"
         >
           <Text>Delete</Text>
         </TouchableOpacity>
@@ -128,7 +128,7 @@ const DisplayDocuments = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-primary">
-        <View className="bg-secondary-100 flex mr-60 pt-2 pb-2 rounded-md">
+        <View className="bg-pink-300 flex mr-60 pt-2 pb-2  rounded-md">
         <Text className="text-blacktext-bold text-2xl text-center">
         Your Uploads
       </Text>

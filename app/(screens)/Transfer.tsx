@@ -3,7 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, ActivityIndicator, ToastAndroid, Alert } from 'react-native';
 import { Account, Client, Databases, ID, Query, Storage } from 'react-native-appwrite';
 import * as DocumentPicker from "expo-document-picker";
-import { getCurrentUser } from '@/lib/appwrite';
+import { getAccount, getCurrentUser } from '@/lib/appwrite';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+
+
+// Database ID:           {di}
+// ORG Collection ID:     {oci}
+// Organisation FILE ID:  {ofci}
+// CURRENT ORG ID:        {coi} 
+// Storage ID:            {si}
 
 const Transfer = () => {
 
@@ -14,35 +23,27 @@ const Transfer = () => {
     
         const itemData = JSON.parse(item);
         const qrData = itemData.qrCodeData;
-        console.log(itemData);
         
-        
-        const {endpoint, platform, projectid, organisationid, databaseid, orgcollectionid, storageid} = qrData;
+        const {di, oci, ofci, coi, si} = qrData;
 
 
 
 const orgClient = new Client();
 
 orgClient
-  .setEndpoint(endpoint)
-  .setProject(projectid)
-  .setPlatform(platform)
+  .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!)
+  .setProject(process.env.EXPO_PUBLIC_APPWRITE_ORG_PROJECT_ID!)
+  .setPlatform(process.env.EXPO_PUBLIC_APPWRITE_ORG_PLATFORM!)
   
 const orgAccount = new Account(orgClient);
 const orgDatabases = new Databases(orgClient);
 const orgStorage = new Storage(orgClient);
-
-const currAccount =  orgAccount.get().then((response) => {
-    console.log(response);
-})
-console.log(currAccount);
 
 
   const [fileUri, setFileUri] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [fileType, setFileType] = useState<string>("");
   const [fileSize, setFileSize] = useState<number>();
-  const [uploading, setUploading] = useState(false);
 
    async function getCurrentOrg() {
     try {
@@ -50,8 +51,8 @@ console.log(currAccount);
       if (!currentAccount) throw Error;
   
       const currentUser = await orgDatabases.listDocuments(
-        databaseid,
-        "665e27920026aff00219",
+        di,
+        oci,
         [Query.equal("accountid", currentAccount.$id)]
       );
   
@@ -67,36 +68,38 @@ console.log(currAccount);
   
   async function fileUploader(fileData:any) {
 
-      const currUserID = await getCurrentOrg();   
+      const currentOrgID = await getCurrentOrg();   
+      const currentUserID = await getAccount();
       const {name} = fileData;
 
       try {
           
           const response = await orgDatabases.createDocument(
-              databaseid,
-              orgcollectionid,     // recieving collection ID
+              di,
+              ofci,     // recieving collection ID
               ID.unique(),
               {
                   name: name,
                   fileid: "",
-                  organisation:currUserID?.$id,
+                  username:currentUserID.name,
+                  useremail:currentUserID.email,
+                  userid:currentUserID.$id,
+                  organisation:currentOrgID?.$id,
                 }
             );
 
             const documentId = response.$id;
 
             const uploadResponse = await orgStorage.createFile(
-                storageid,
+                si,
                 documentId,
                 fileData
             )
             const uniqueFileID = uploadResponse.$id;
-            console.log("THe upload response", uploadResponse.$id);
-            
 
             await orgDatabases.updateDocument(
-                databaseid,
-                orgcollectionid,
+                di,
+                ofci,
                 documentId,
                 {fileid: uniqueFileID}
             );
@@ -124,8 +127,7 @@ console.log(currAccount);
         setFileSize(size);
         setFileUri(uri);
         setFileType(mimeType!);
-        console.log(name, size, uri, mimeType);
-
+        
         ToastAndroid.show("File selected successfully", ToastAndroid.SHORT);
       } else {
         console.log("File picking cancelled");
@@ -173,29 +175,44 @@ console.log(currAccount);
 
   
   return (
-    <View className='flex-1 p-10 bg-primary'>
-      <Text>Transfer File:</Text>
-      <Button title="Select File" onPress={() => {
-        pickFile();
-      }} />
-      <Button title="Upload File" onPress={() => {
-        UploadToORG();
-      }} />
+    <SafeAreaView className='flex-1 p-2 bg-primary'>
+      <Text className='text-white text-center text-3xl font-semibold mb-10'>Transfer File:</Text>
+      <View className='m-10'>
+          <Button  title="Select File" onPress={() => {
+            pickFile();
+          }} />
+      </View>
+
+          <View className='m-10'>
+            <Button title="Upload File" onPress={() => {
+          UploadToORG();
+        }} />
+
+          </View>
 
 
       <View>
-        <Text className='text-white'>Endpoint: {endpoint}</Text>
-        <Text className='text-white'>Platform: {platform}</Text>
-        <Text className='text-white'>Project ID: {projectid}</Text>
-        <Text className='text-white'>Organisation ID: {organisationid}</Text>
-        <Text className='text-white'>Database ID: {databaseid}</Text>
-        <Text className='text-white'>Collection ID: {orgcollectionid}</Text>
-        <Text className='text-white'>Storage ID: {storageid}</Text>
+        <Text className='text-white'>Database ID: {di}</Text>
+        <Text className='text-white'>ORG Collection ID: {oci}</Text>
+        <Text className='text-white'>Organisation FILE  ID: {ofci}</Text>
+        <Text className='text-white'>CURRENT ORG ID: {coi} </Text>
+        <Text className='text-white'>Storage ID: {si}</Text>
       </View>
       
-    </View>
+    </SafeAreaView>
   );
 };
 
 
 export default Transfer
+
+
+
+// ept: appwriteConfig.endpoint,                                 // endpoint -ept
+// pf: appwriteConfig.platform,                                 // platform -pf
+// pi: appwriteConfig.projectId,                               // projectId -pi
+// di: appwriteConfig.databaseId,                            // databaseId -di
+// oci: appwriteConfig.orgCollectionId,                     // orgCollectionId -oci
+// ofci: appwriteConfig.orgFileCollectionId,               // orgFileCollectionId -ofci
+// coi: (await currentUser).$id,                          // currentOrganizationId - coi
+// si: appwriteConfig.storageId,                         // storageId -si

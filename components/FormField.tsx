@@ -27,7 +27,7 @@ const FormField = ({
 
       <Text className="text-base text-gray-100">{title}</Text>
       
-      <View className="w-full h-16 px-3 bg-black-100 rounded-2xl border-2 border-black-200 focus:border-secondary flex flex-row items-center">
+      <View className="w-full h-16 px-3 bg-black-100 rounded-2xl border-2 border-black-200 focus:border-pink-200 flex flex-row items-center">
         <TextInput
           className="flex-1 text-white text-base"
           value={value}

@@ -56,8 +56,8 @@ const Signup = () => {
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
         <View className="w-full justify-center  min-h-[85vh] px-4 py-6">
-          <Text className="text-3xl font-semibold text-white mt-10">
-            Log in to Medibit
+          <Text className="text-3xl text-center font-semibold text-white mt-10">
+            Sign Up to Medibit
           </Text>
 
           <FormField
@@ -98,7 +98,7 @@ const Signup = () => {
             </Text>
             <Link
               href="/Signin"
-              className="text-lg font-psemibold text-secondary"
+              className="text-lg font-psemibold text-pink-300"
             >
               Sign In
             </Link>

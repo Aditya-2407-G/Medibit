@@ -81,15 +81,6 @@ const FileUploader = () => {
       } 
     };
 
-  const previewFile = async () => {
-    const file = viewDocument();
-    if (file === undefined) {
-      Alert.alert("Error", "Please upload a file first.");
-      return;
-    }
-    console.log(file);
-  };
-
   const DocumentRoute = async () => {
     router.push("DisplayDocuments");
   };
@@ -99,28 +90,23 @@ const FileUploader = () => {
 
       <View className="flex-col justify-center">
       <TouchableOpacity
-        className="bg-secondary-200 px-10 py-10 rounded-md text-center m-10"
+        className="bg-purple-200 px-10 py-10 rounded-md text-center m-10"
         onPress={pickFile}
       >
         <Text className="text-black font-bold text-center">Pick a File</Text>
       </TouchableOpacity>
+
       <TouchableOpacity
-        className="bg-secondary-200 px-10 py-10 rounded-md text-center m-10"
-        onPress={previewFile}
-      >
-        <Text className="text-black font-bold text-center">Preview File</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        className="bg-secondary-200 px-10 py-10 rounded-md text-center m-10"
+        className="bg-purple-200 px-10 py-10 rounded-md text-center m-10"
         onPress={uploadUserFile}
       >
-        <Text className="text-black font-bold text-center">User File Uploader</Text>
+        <Text className="text-black font-bold text-center">Save File</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        className="bg-secondary-200 px-10 py-10 rounded-md text-center m-10"
+        className="bg-purple-200 px-10 py-10 rounded-md text-center m-10"
         onPress={DocumentRoute}
       >
-        <Text className="text-black font-bold text-center">Uploaded Documents</Text>
+        <Text className="text-black font-bold text-center">View Saved Files</Text>
       </TouchableOpacity>
 
       </View>
