@@ -14,72 +14,72 @@ import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const FileUploader = () => {
-  const [fileUri, setFileUri] = useState<string>("");
-  const [fileName, setFileName] = useState<string>("");
-  const [fileType, setFileType] = useState<string>("");
-  const [fileSize, setFileSize] = useState<number>();
-  const [uploading, setUploading] = useState(false);
+    const [fileUri, setFileUri] = useState<string>("");
+    const [fileName, setFileName] = useState<string>("");
+    const [fileType, setFileType] = useState<string>("");
+    const [fileSize, setFileSize] = useState<number>();
+    const [uploading, setUploading] = useState(false);
 
-  const pickFile = async () => {
-    try {
-      const res = await DocumentPicker.getDocumentAsync({
-        type: "*/*",
-      });
-
-      if (res.assets) {
-        const { name, size, uri, mimeType } = res.assets[0];
-        setFileName(name);
-        setFileSize(size);
-        setFileUri(uri);
-        setFileType(mimeType!);
-        console.log(name, size, uri, mimeType);
-
-        ToastAndroid.show("File selected successfully", ToastAndroid.SHORT);
-      } else {
-        console.log("File picking cancelled");
-      }
-    } catch (error) {
-      console.error("Error picking file:", error);
-      Alert.alert("Error", "Failed to pick file. Please try again later.");
-    }
-  };
-
-  const uploadUserFile = async () => {
-
-    if (!fileUri) {
-      Alert.alert("Error", "Please pick a file first.");
-      return;
-    }
-
-    try {
-
-      setUploading(true);
-
-      const fileData = {
-        name: fileName,
-        type: fileType,
-        size: fileSize!,
-        uri: fileUri,
-      };
-
-      const ref = userFileUploader(fileData);
-      
-      ref
-        .then(() => {
-          console.log("File uploaded successfully");
-          ToastAndroid.show("File uploaded successfully", ToastAndroid.SHORT);
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-          Alert.alert("Error", `Failed to upload file. ${error}`);
-        }).finally(() => {
-          setUploading(false);
+    const pickFile = async () => {
+      try {
+        const res = await DocumentPicker.getDocumentAsync({
+          type: "*/*",
         });
-    } catch (error) {
-      console.log("Error uploading file:", error);
-      Alert.alert("Error", `Failed to upload file. ${error}`);
-    } 
-  };
+
+        if (res.assets) {
+          const { name, size, uri, mimeType } = res.assets[0];
+          setFileName(name);
+          setFileSize(size);
+          setFileUri(uri);
+          setFileType(mimeType!);
+          console.log(name, size, uri, mimeType);
+
+          ToastAndroid.show("File selected successfully", ToastAndroid.SHORT);
+        } else {
+          console.log("File picking cancelled");
+        }
+      } catch (error) {
+        console.error("Error picking file:", error);
+        Alert.alert("Error", "Failed to pick file. Please try again later.");
+      }
+    };
+
+    const uploadUserFile = async () => {
+
+      if (!fileUri) {
+        Alert.alert("Error", "Please pick a file first.");
+        return;
+      }
+
+      try {
+
+        setUploading(true);
+
+        const fileData = {
+          name: fileName,
+          type: fileType,
+          size: fileSize!,
+          uri: fileUri,
+        };
+
+        const ref = userFileUploader(fileData);
+        
+        ref
+          .then(() => {
+            console.log("File uploaded successfully");
+            ToastAndroid.show("File uploaded successfully", ToastAndroid.SHORT);
+          })
+          .catch((error) => {
+            console.error("Error uploading file:", error);
+            Alert.alert("Error", `Failed to upload file. ${error}`);
+          }).finally(() => {
+            setUploading(false);
+          });
+      } catch (error) {
+        console.log("Error uploading file:", error);
+        Alert.alert("Error", `Failed to upload file. ${error}`);
+      } 
+    };
 
   const previewFile = async () => {
     const file = viewDocument();
