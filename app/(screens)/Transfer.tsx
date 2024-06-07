@@ -1,212 +1,64 @@
-import { useRoute } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, ActivityIndicator, ToastAndroid, Alert } from 'react-native';
-import { Account, Client, Databases, ID, Query, Storage } from 'react-native-appwrite';
-import * as DocumentPicker from "expo-document-picker";
-import { getAccount, getCurrentUser } from '@/lib/appwrite';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-
-
-// Database ID:           {di}
-// ORG Collection ID:     {oci}
-// Organisation FILE ID:  {ofci}
-// CURRENT ORG ID:        {coi} 
-// Storage ID:            {si}
+import React, { useState } from "react";
+import { View, Text } from "react-native";
+import { useRoute } from "@react-navigation/native";
+import { pickFile } from "../../components/filePicker";
+import { UploadToORG } from "../../components/FileTranferToOrgDb";
+import CustomButton from "@/components/CustomButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Transfer = () => {
-
     const route = useRoute();
     // @ts-ignore
-    const {item} = route.params;
-    
-    
-        const itemData = JSON.parse(item);
-        const qrData = itemData.qrCodeData;
-        
-        const {di, oci, ofci, coi, si} = qrData;
+    const { item } = route.params;
 
+    const itemData = JSON.parse(item);
+    const qrData = itemData.qrCodeData;
 
+    const { di, oci, ofci, coi, si, n } = qrData;
 
-const orgClient = new Client();
+    const [fileUri, setFileUri] = useState<string>("");
+    const [fileName, setFileName] = useState<string>("");
+    const [fileType, setFileType] = useState<string>("");
+    const [fileSize, setFileSize] = useState<number>(0);
 
-orgClient
-  .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!)
-  .setProject(process.env.EXPO_PUBLIC_APPWRITE_ORG_PROJECT_ID!)
-  .setPlatform(process.env.EXPO_PUBLIC_APPWRITE_ORG_PLATFORM!)
-  
-const orgAccount = new Account(orgClient);
-const orgDatabases = new Databases(orgClient);
-const orgStorage = new Storage(orgClient);
+    const handleFilePickup = () => {
+        pickFile(setFileName, setFileSize, setFileUri, setFileType);
+    };
+    const handleFileUpload = () => {
+        UploadToORG(fileUri, fileName, fileType, fileSize, coi, di, ofci, si);
+    };
 
+    return (
+        <SafeAreaView className="flex-1 flex-col bg-primary justify-evenly p-10">
+            <View>
+                <Text className="text-white text-center text-3xl font-semibold ">
+                    Sending files to{" "}
+                </Text>
+                <Text className="text-white text-center text-3xl mt-10 font-semibold">
+                    {n}
+                </Text>
+            </View>
 
-  const [fileUri, setFileUri] = useState<string>("");
-  const [fileName, setFileName] = useState<string>("");
-  const [fileType, setFileType] = useState<string>("");
-  const [fileSize, setFileSize] = useState<number>();
+            <CustomButton
+                title="Select file for uploading"
+                handlePress={handleFilePickup}
+                containerStyles={undefined}
+                textStyles={undefined}
+                isLoading={false}
+            ></CustomButton>
 
-   async function getCurrentOrg() {
-    try {
-      const currentAccount = await orgAccount.get();
-      if (!currentAccount) throw Error;
-  
-      const currentUser = await orgDatabases.listDocuments(
-        di,
-        oci,
-        [Query.equal("accountid", currentAccount.$id)]
-      );
-  
-      if (!currentUser) throw Error;
-  
-      return currentUser.documents[0];
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  }
-
-  
-  async function fileUploader(fileData:any) {
-
-      const currentOrgID = await getCurrentOrg();   
-      const currentUserID = await getAccount();
-      const {name} = fileData;
-
-      try {
-          
-          const response = await orgDatabases.createDocument(
-              di,
-              ofci,     // recieving collection ID
-              ID.unique(),
-              {
-                  name: name,
-                  fileid: "",
-                  username:currentUserID.name,
-                  useremail:currentUserID.email,
-                  userid:currentUserID.$id,
-                  organisation:currentOrgID?.$id,
-                }
-            );
-
-            const documentId = response.$id;
-
-            const uploadResponse = await orgStorage.createFile(
-                si,
-                documentId,
-                fileData
-            )
-            const uniqueFileID = uploadResponse.$id;
-
-            await orgDatabases.updateDocument(
-                di,
-                ofci,
-                documentId,
-                {fileid: uniqueFileID}
-            );
-  
-      ToastAndroid.show("File uploaded successfully", ToastAndroid.SHORT);
-    } catch (error) {
-      console.log("Error uploading file:", error);
-      
-    }
-  }
-
-
-
-
-
-  const pickFile = async () => {
-    try {
-      const res = await DocumentPicker.getDocumentAsync({
-        type: "*/*",
-      });
-
-      if (res.assets) {
-        const { name, size, uri, mimeType } = res.assets[0];
-        setFileName(name);
-        setFileSize(size);
-        setFileUri(uri);
-        setFileType(mimeType!);
-        
-        ToastAndroid.show("File selected successfully", ToastAndroid.SHORT);
-      } else {
-        console.log("File picking cancelled");
-      }
-    } catch (error) {
-      console.error("Error picking file:", error);
-      Alert.alert("Error", "Failed to pick file. Please try again later.");
-    }
-  };
-
-  const UploadToORG = async () => {
-
-    if (!fileUri) {
-      Alert.alert("Error", "Please pick a file first.");
-      return;
-    }
-
-    try {
-
-      const fileData = {
-        name: fileName,
-        type: fileType,
-        size: fileSize!,
-        uri: fileUri,
-      };
-
-      const ref = fileUploader(fileData);
-      
-      ref
-        .then(() => {
-          console.log("File uploaded successfully");
-          ToastAndroid.show("File uploaded successfully", ToastAndroid.SHORT);
-        })
-        .catch((error:any) => {
-          console.error("Error uploading file:", error);
-          Alert.alert("Error", `Failed to upload file. ${error}`);
-        })
-
-    } catch (error) {
-      console.log("Error uploading file:", error);
-      Alert.alert("Error", `Failed to upload file. ${error}`);
-    } 
-  };
-
-
-  
-  return (
-    <SafeAreaView className='flex-1 p-2 bg-primary'>
-      <Text className='text-white text-center text-3xl font-semibold mb-10'>Transfer File:</Text>
-      <View className='m-10'>
-          <Button  title="Select File" onPress={() => {
-            pickFile();
-          }} />
-      </View>
-
-          <View className='m-10'>
-            <Button title="Upload File" onPress={() => {
-          UploadToORG();
-        }} />
-
-          </View>
-
-
-      <View>
-        <Text className='text-white'>Database ID: {di}</Text>
-        <Text className='text-white'>ORG Collection ID: {oci}</Text>
-        <Text className='text-white'>Organisation FILE  ID: {ofci}</Text>
-        <Text className='text-white'>CURRENT ORG ID: {coi} </Text>
-        <Text className='text-white'>Storage ID: {si}</Text>
-      </View>
-      
-    </SafeAreaView>
-  );
+            <CustomButton
+                title="Upload file"
+                handlePress={handleFileUpload}
+                containerStyles="mb-20"
+                textStyles={undefined}
+                isLoading={false}
+            ></CustomButton>
+        </SafeAreaView>
+    );
 };
 
-
-export default Transfer
-
-
+export default Transfer;
 
 // ept: appwriteConfig.endpoint,                                 // endpoint -ept
 // pf: appwriteConfig.platform,                                 // platform -pf

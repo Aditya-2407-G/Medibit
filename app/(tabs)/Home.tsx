@@ -1,61 +1,60 @@
 import CustomButton from "@/components/CustomButton";
-import { getAccount} from "@/lib/appwrite";
+import { getAccount } from "@/lib/appwrite";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 
 const Home = () => {
-  const [name, setName] = useState("");
+    const [name, setName] = useState("");
 
-  useEffect(() => {
-    getAccount().then((user) => {
-      if (user) {
-        setName(user.name);
-      }
-    });
-  }, []);
+    useEffect(() => {
+        getAccount().then((user) => {
+            if (user) {
+                setName(user.name);
+            }
+        });
+    }, []);
 
-  const handleScanQR = () => {
-    router.push("../ScanQR");
-  };
-  const handleDocuments = () => {
-    router.push("../Documents");
-  }
+    const handleScanQR = () => {
+        router.push("../ScanQR");
+    };
+    const handleDocuments = () => {
+        router.push("../Documents");
+    };
 
+    return (
+        <SafeAreaView className="bg-primary h-full flex justify-center p-4">
+            <Text className="text-white text-2xl font-bold mb-5 text-center">
+                Hello, {name}!
+            </Text>
 
-  return (
-    <SafeAreaView className="bg-primary h-full flex justify-center p-4">
-      <Text className="text-white text-2xl font-bold mb-5 text-center">
-        Hello, {name}!
-      </Text>
+            <View className="mt-20">
+                <CustomButton
+                    title="SCAN QR CODE"
+                    handlePress={handleScanQR}
+                    containerStyles="w-full mb-10"
+                    textStyles={undefined}
+                    isLoading={undefined}
+                />
 
-      <View className="mt-20">
-        <CustomButton
-          title="SCAN QR CODE"
-          handlePress={handleScanQR}
-          containerStyles="w-full mb-10"
-          textStyles={undefined}
-          isLoading={undefined}
-        />
+                <CustomButton
+                    title="Documents"
+                    handlePress={handleDocuments}
+                    containerStyles="w-full mb-10"
+                    textStyles={undefined}
+                    isLoading={undefined}
+                />
 
-        <CustomButton
-          title="Documents"
-          handlePress={handleDocuments}
-          containerStyles="w-full mb-10"
-          textStyles={undefined}
-          isLoading={undefined}
-        />
-
-        <CustomButton
-          title="Find Hospitals and Doctors"
-          handlePress={undefined}
-          containerStyles="w-full mb-10"
-          textStyles={undefined}
-          isLoading={undefined}
-        />
-      </View>
-    </SafeAreaView>
-  );
+                <CustomButton
+                    title="Find Hospitals and Doctors"
+                    handlePress={undefined}
+                    containerStyles="w-full mb-10"
+                    textStyles={undefined}
+                    isLoading={undefined}
+                />
+            </View>
+        </SafeAreaView>
+    );
 };
 
 export default Home;

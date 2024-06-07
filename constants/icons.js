@@ -12,6 +12,8 @@ import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
 import crossfit from "../assets/icons/crossfit.png";
+import download from "../assets/icons/download.png";
+import cross from "../assets/icons/cross.png";
 
 export default {
   play,
@@ -24,8 +26,10 @@ export default {
   search,
   upload,
   rightArrow,
+  cross,
   logout,
   eyeHide,
   eye,
-  crossfit
+  crossfit,
+  download
 };
