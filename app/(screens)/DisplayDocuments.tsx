@@ -16,12 +16,14 @@ import { shareAsync } from "expo-sharing";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "../../constants";
 import { TabIcon } from "@/components/TabIcon";
+import { StatusBar } from "expo-status-bar";
 
 const DisplayDocuments = () => {
     // Use state hook for storing user files from db
 
     const [userFiles, setUserFiles] = useState<any[]>([]);
     const [downloading, setDownloading] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false); 
 
     useEffect(() => {
         fetchUserFiles();
@@ -112,38 +114,42 @@ const DisplayDocuments = () => {
         return name.substring(0, maxLength) + "....";
     };
 
+    const handleRefresh = async () => {
+        setIsRefreshing(true);
+        await fetchUserFiles();
+        setIsRefreshing(false);
+    };
+
     const renderItem = ({ item }: any) => (
-        <View className="flex-row items-center justify-between p-2 ">
-            <Text className="text-white font-bold flex-1">
-                {truncateFileName(item.name, 20)}
+        <View className="flex-row items-center justify-between p-1">
+            <Text className="text-white font-bold ">
+                {truncateFileName(item.name, 15)}
             </Text>
+            <Text className="text-white font-bold ">{item.username}</Text>
+            <Text className="text-white font-bold">{item.useremail}</Text>
 
             <View className="flex-row">
                 <TouchableOpacity
-                    // className="bg-red-100"
-                    activeOpacity={0.7}
                     onPress={() => handleFileDownload(item.name, item.$id)}
                     disabled={downloading}
+                    className="px-1 py-2 rounded-md ml-6"
                 >
                     <TabIcon
                         icon={icons.download}
                         color="white"
-                        // name="Download"
-                        focused={undefined}
-                        containerStyles="h-9"
+                        containerStyle="w-5 h-6"
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    className="ml-2"
-                    activeOpacity={0.7}
                     onPress={() => handleFileDelete(item.$id)}
                     disabled={downloading}
+                    className="px-1 py-2 rounded-md ml-2"
                 >
                     <TabIcon
                         icon={icons.cross}
                         color="white"
-                        focused={undefined}
+                        containerStyle="w-4 h-6"
                     />
                 </TouchableOpacity>
             </View>
@@ -151,15 +157,39 @@ const DisplayDocuments = () => {
     );
 
     return (
+
+
         <SafeAreaView className="flex-1 bg-primary">
-            <View className="bg-pink-300 flex mr-60 pt-2 pb-2  rounded-md">
-                <Text className="text-blacktext-bold text-2xl text-center">
+            <StatusBar style="light" />
+
+            <View className="flex-row justify-between">
+
+            <View className="p-2">
+                <Text className="text-white font-bold text-2xl">
                     Your Uploads
                 </Text>
             </View>
+            <TouchableOpacity
+                        className="mr-2 mt-3"
+                        onPress={handleRefresh}
+                    >
+                        {isRefreshing ? (
+                            <ActivityIndicator className="mt-2" size="large" color="white" />
+                        ) : (
+                            <TabIcon
+                                icon={icons.refresh}
+                                color="white"
+                                containerStyle="w-8 h-7"
+                            />
+                        )}
+                    </TouchableOpacity>
+
+            </View>
+
+
 
             <FlatList
-                className="mt-3 bg-slate-800 rounded-md p-2"
+                className="mt-1 bg-slate-600 rounded-md p-2"
                 data={userFiles}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.$id}

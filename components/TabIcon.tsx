@@ -1,19 +1,18 @@
 import React from "react";
 import { View, Image, Text } from "react-native";
-export const TabIcon = ({icon,color,name,focused,containerStyles,}: any) => {
+export const TabIcon = ({icon,color,name,focused,containerStyle, iconStyle}: any) => {
     
     return (
-        <View className="flex items-center justify-center w-7 h-8">
+        <View className={`flex items-center justify-center ${iconStyle}`}>
             <Image
                 source={icon}
                 resizeMode="contain"
                 tintColor={color}
-                className={`w-5 h-4 ${containerStyles}`}
+                className={`${containerStyle}`}
+
             />
             <Text
-                className={`${
-                    focused ? "font-psemibold" : "font-pregular"
-                } text-xs`}
+                className={`${focused ? "font-semibold" : "font-regular"} text-xs`}
                 style={{ color: color }}
             >
                 {name}
@@ -21,3 +20,5 @@ export const TabIcon = ({icon,color,name,focused,containerStyles,}: any) => {
         </View>
     );
 };
+
+

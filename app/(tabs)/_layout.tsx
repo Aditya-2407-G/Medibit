@@ -40,6 +40,8 @@ const TabLayout = () => {
                                 color={color}
                                 name="Home"
                                 focused={focused}
+                                containerStyle="w-6 h-6"
+                                iconStyle= "gap-2"
                             />
                         ),
                     }}
@@ -55,6 +57,8 @@ const TabLayout = () => {
                                 color={color}
                                 name="Workout"
                                 focused={focused}
+                                containerStyle="w-6 h-6"
+                                iconStyle= "gap-2"
                             />
                         ),
                     }}
@@ -70,6 +74,8 @@ const TabLayout = () => {
                                 color={color}
                                 name="Profile"
                                 focused={focused}
+                                containerStyle="w-6 h-6"
+                                iconStyle= "gap-2"
                             />
                         ),
                     }}
@@ -80,3 +86,5 @@ const TabLayout = () => {
 };
 
 export default TabLayout;
+
+
