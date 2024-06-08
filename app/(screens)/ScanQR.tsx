@@ -32,10 +32,14 @@ const ScanQR = () => {
     };
 
     const handleBarCodeScanned = ({ data }: { data: any }) => {
-        const scannedData = data;
-        setScanned(false);
 
-        Alert.alert(`Bar code data ${data} has been scanned!`);
+        const scannedData = data;
+        if(!scannedData.includes("di")) {
+            Alert.alert("Invalid QR code", "Please try again by scanning a valid QR code.");
+            setScanned(false);
+            return;
+        }
+        setScanned(false);
 
         if (data) {
             router.push({
