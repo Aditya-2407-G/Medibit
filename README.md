@@ -1,3 +1,6 @@
+# Currently working on a updated version of the app, will soon provide the new apk link !!! 
+
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
