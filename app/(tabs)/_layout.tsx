@@ -18,14 +18,18 @@ const TabLayout = () => {
             <StatusBar backgroundColor="#161622" style="light" />
             <Tabs
                 screenOptions={{
-                    tabBarActiveTintColor: "#F9A8D4",
+                    tabBarActiveTintColor: "#3A83F4",
                     tabBarInactiveTintColor: "#CDCDE0",
                     tabBarShowLabel: false,
                     tabBarStyle: {
-                        backgroundColor: "#161622",
-                        borderTopWidth: 1,
-                        borderTopColor: "#232533",
+                        backgroundColor: "#1E1E2C",
+                        borderTopWidth: -1,
                         height: 70,
+                        borderRadius: 100,
+                        position: 'absolute',
+                        bottom: 20, // Adjust this value to move the tab bar up
+                        left: 10,  // Add padding from left
+                        right: 10, // Add padding from right
                     },
                 }}
             >
@@ -41,7 +45,7 @@ const TabLayout = () => {
                                 name="Home"
                                 focused={focused}
                                 containerStyle="w-6 h-6"
-                                iconStyle= "gap-2"
+                                iconStyle="gap-2"
                             />
                         ),
                     }}
@@ -58,7 +62,7 @@ const TabLayout = () => {
                                 name="Workout"
                                 focused={focused}
                                 containerStyle="w-6 h-6"
-                                iconStyle= "gap-2"
+                                iconStyle="gap-2"
                             />
                         ),
                     }}
@@ -75,7 +79,7 @@ const TabLayout = () => {
                                 name="Profile"
                                 focused={focused}
                                 containerStyle="w-6 h-6"
-                                iconStyle= "gap-2"
+                                iconStyle="gap-2"
                             />
                         ),
                     }}
@@ -86,5 +90,3 @@ const TabLayout = () => {
 };
 
 export default TabLayout;
-
-

@@ -189,7 +189,8 @@ const DisplayDocuments = () => {
 
 
             <FlatList
-                className="mt-1 bg-slate-600 rounded-md p-2"
+            style={{ backgroundColor: "#222232"}}
+                className="mt-1 rounded-md p-2"
                 data={userFiles}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.$id}

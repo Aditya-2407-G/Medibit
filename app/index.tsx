@@ -19,7 +19,7 @@ export default function Index() {
 
                 <View className="flex items-center justify-center min-h-[85vh]">
                     <HelloWave />
-                    <Text className="text-white font-bold text-3xl p-10 mb-20">
+                    <Text className="text-white font-pbold text-3xl p-10 mb-20">
                         Welcome to Medibit !
                     </Text>
                     <CustomButton

@@ -8,16 +8,19 @@ export const CustomButton = ({
     isLoading,
 }) => {
     return (
+        
         <TouchableOpacity
             onPress={handlePress}
             activeOpacity={0.7}
-            className={`bg-purple-200 rounded-xl min-h-[62px] flex flex-row justify-center items-center ${containerStyles} ${
+            style={{ backgroundColor: 'rgba(9, 181, 211, 0.9)' }}
+            className={`rounded-xl min-h-[62px] flex flex-row justify-center items-center ${containerStyles} ${
+                
                 isLoading ? "opacity-50" : ""
             }`}
             disabled={isLoading}
         >
             <Text
-                className={`text-primary font-psemibold text-lg ${textStyles}`}
+                className={`text-primary text-center font-pmedium text-lg ${textStyles}`}
             >
                 {title}
             </Text>

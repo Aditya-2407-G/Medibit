@@ -20,7 +20,7 @@ const FileUploader = () => {
         <SafeAreaView className="flex-1 justify-center h-full bg-primary">
             <View className="flex-col justify-center">
                 <TouchableOpacity
-                    className="bg-purple-200 px-10 py-10 rounded-md text-center m-10"
+                    className="bg-cyan-500 px-10 py-10 rounded-md text-center m-10"
                     activeOpacity={0.7}
                     onPress={() => {
                         pickFile(
@@ -37,7 +37,7 @@ const FileUploader = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    className="bg-purple-200 px-10 py-10 rounded-md text-center m-10"
+                    className="bg-cyan-500 px-10 py-10 rounded-md text-center m-10"
                     activeOpacity={0.7}
                     onPress={() =>
                         uploadUserFile(
@@ -55,7 +55,7 @@ const FileUploader = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    className="bg-purple-200 px-10 py-10 rounded-md text-center m-10"
+                    className="bg-cyan-500 px-10 py-10 rounded-md text-center m-10"
                     activeOpacity={0.7}
                     onPress={DocumentRoute}
                 >

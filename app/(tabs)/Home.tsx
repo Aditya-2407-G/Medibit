@@ -2,7 +2,9 @@ import CustomButton from "@/components/CustomButton";
 import { getAccount } from "@/lib/appwrite";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
     const [name, setName] = useState("");
@@ -23,37 +25,48 @@ const Home = () => {
     };
 
     return (
-        <SafeAreaView className="bg-primary h-full flex justify-center p-4">
-            <Text className="text-white text-2xl font-bold mb-5 text-center">
-                Hello, {name}!
-            </Text>
+            <SafeAreaView className=" bg-primary h-full">
+                <View className="container">
+                    <View className="flex-row justify-between items-center px-4 mt-4">
+                        <Text className="text-white text-3xl font-pbold">
+                            Hello, {name}!
+                        </Text>
+                    </View>
 
-            <View className="mt-20">
-                <CustomButton
-                    title="SCAN QR CODE"
-                    handlePress={handleScanQR}
-                    containerStyles="w-full mb-10"
-                    textStyles={undefined}
-                    isLoading={undefined}
-                />
+                    <View className="mt-10 flex-col justify-center min-h-[85vh]">
+                        <View className="flex flex-row flex-wrap-reverse justify-around">
+                            <View className="m-2">
+                                <CustomButton
+                                    title="Find Hospitals and Doctors"
+                                    handlePress={undefined}
+                                    containerStyles="w-40 h-40 justify-center"
+                                    textStyles="text-center"
+                                    isLoading={undefined}
+                                />
+                            </View>
+                            <View className="m-2">
+                                <CustomButton
+                                    title="Documents"
+                                    handlePress={handleDocuments}
+                                    containerStyles="w-40 h-40 justify-center"
+                                    textStyles="text-center"
+                                    isLoading={undefined}
+                                />
+                            </View>
+                            <View className="m-2">
+                                <CustomButton
+                                    title="SCAN QR CODE"
+                                    handlePress={handleScanQR}
+                                    containerStyles="w-40 h-40 justify-center"
+                                    textStyles="text-center"
+                                    isLoading={undefined}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </SafeAreaView>
 
-                <CustomButton
-                    title="Documents"
-                    handlePress={handleDocuments}
-                    containerStyles="w-full mb-10"
-                    textStyles={undefined}
-                    isLoading={undefined}
-                />
-
-                <CustomButton
-                    title="Find Hospitals and Doctors"
-                    handlePress={undefined}
-                    containerStyles="w-full mb-10"
-                    textStyles={undefined}
-                    isLoading={undefined}
-                />
-            </View>
-        </SafeAreaView>
     );
 };
 
