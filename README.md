@@ -1,4 +1,4 @@
-# Currently working on a updated version of the app, will soon provide the new apk link !!! 
+# This is a complete revamp of the older version of the app, currently working on it. Will soon provide the new apk link !!! 
 
 
 # Welcome to your Expo app 👋
