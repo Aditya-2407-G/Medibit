@@ -28,10 +28,10 @@ const Profile = () => {
                     <Image
                         source={icons.logout}
                         resizeMode="contain"
-                        className="w-6 h-6"
+                        className="w-10 h-10"
                     />
-                    {/* <Text className="text-red-500">Logout</Text> */}
                 </TouchableOpacity>
+                    <Text className="text-white">Logout</Text>
             </View>
         </SafeAreaView>
     );

@@ -43,6 +43,7 @@ export const fileUploader = async (
         });
 
         ToastAndroid.show("File uploaded successfully", ToastAndroid.SHORT);
+        
     } catch (error) {
         console.log("Error uploading file:", error);
     }

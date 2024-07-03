@@ -6,6 +6,7 @@ import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import { Signin, getCurrentUser } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalContextProvider";
+import Lottie from "lottie-react-native";
 
 const SignIn = () => {
     const { setUser, setIsLogged } = useGlobalContext();
@@ -44,8 +45,18 @@ const SignIn = () => {
     return (
         <SafeAreaView className="bg-primary h-full">
             <ScrollView>
-                <View className="w-full justify-center  min-h-[85vh] px-4 py-6">
-                    <Text className="text-3xl text-center font-semibold text-white mt-10">
+
+                <View className="w-full justify-center px-4 py-6">
+
+                    <View className="self-center">
+                        <Lottie
+                            source={require("../../assets/animations/schedule.json")}
+                            autoPlay
+                            style={{ height: 300, width: 300 }}
+                        />
+                    </View>
+
+                    <Text className="text-3xl text-center font-semibold text-white">
                         Log in to Medibit
                     </Text>
 
@@ -86,7 +97,9 @@ const SignIn = () => {
                             Sign Up
                         </Link>
                     </View>
+
                 </View>
+                
             </ScrollView>
         </SafeAreaView>
     );

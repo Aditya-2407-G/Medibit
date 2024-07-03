@@ -6,6 +6,7 @@ import CustomButton from "../../components/CustomButton";
 import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalContextProvider";
+import Lottie from "lottie-react-native";
 
 const Signup = () => {
     const { setUser, setIsLogged } = useGlobalContext();
@@ -47,11 +48,19 @@ const Signup = () => {
     return (
         <SafeAreaView className="bg-primary h-full">
             <ScrollView>
-
                 <View className="w-full justify-center  min-h-[85vh] px-4 py-6">
-                    <Text className="text-3xl text-center font-semibold text-white mt-10">
-                        Sign Up to Medibit
-                    </Text>
+                    
+                    <View className="flex-row justify-evenly">
+                        <Text className="text-3xl font-semibold text-white mt-10 ">
+                            Sign Up to Medibit
+                        </Text>
+
+                        <Lottie
+                            source={require("../../assets/animations/clipboard.json")}
+                            autoPlay
+                            style={{ width: 100, height: 100 }}
+                        />
+                    </View>
 
                     <FormField
                         title="Username"
@@ -100,7 +109,6 @@ const Signup = () => {
                         </Link>
                     </View>
                 </View>
-                
             </ScrollView>
         </SafeAreaView>
     );

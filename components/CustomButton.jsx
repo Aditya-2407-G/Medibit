@@ -12,8 +12,7 @@ export const CustomButton = ({
         <TouchableOpacity
             onPress={handlePress}
             activeOpacity={0.7}
-            style={{ backgroundColor: 'rgba(9, 181, 211, 0.9)' }}
-            className={`rounded-xl min-h-[62px] flex flex-row justify-center items-center ${containerStyles} ${
+            className={`rounded-xl bg-buttonclr min-h-[62px] flex flex-row justify-center items-center ${containerStyles} ${
                 
                 isLoading ? "opacity-50" : ""
             }`}

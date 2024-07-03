@@ -8,12 +8,7 @@ const ScreenLayout = () => {
             <StatusBar backgroundColor="#161622" style="light" />
 
             <Stack>
-                <Stack.Screen
-                    name="ScanQR"
-                    options={{
-                        headerShown: false,
-                    }}
-                />
+
                 <Stack.Screen
                     name="Documents"
                     options={{

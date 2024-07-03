@@ -1,9 +1,9 @@
 import { CameraView, useCameraPermissions } from "expo-camera";
-import React from "react";
-import { useState } from "react";
-import { Alert, Button, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { Button } from "react-native-paper";
 
 const ScanQR = () => {
     const [permission, requestPermission] = useCameraPermissions();
@@ -22,7 +22,7 @@ const ScanQR = () => {
                 <Text className="text-white font-bold text-2xl mb-10">
                     We need your permission to show the camera
                 </Text>
-                <Button onPress={requestPermission} title="grant permission" />
+                <Button onPress={requestPermission}>Grant Permission</Button>
             </View>
         );
     }
@@ -32,10 +32,12 @@ const ScanQR = () => {
     };
 
     const handleBarCodeScanned = ({ data }: { data: any }) => {
-
         const scannedData = data;
-        if(!scannedData.includes("di")) {
-            Alert.alert("Invalid QR code", "Please try again by scanning a valid QR code.");
+        if (!scannedData.includes("di")) {
+            Alert.alert(
+                "Invalid QR code",
+                "Please try again by scanning a valid QR code."
+            );
             setScanned(false);
             return;
         }
@@ -59,23 +61,28 @@ const ScanQR = () => {
                 barcodeTypes: ["qr"],
             }}
         >
-            <View className="flex-1 flex-row justify-center items-end mb-10">
-                <TouchableOpacity
-                    className=" bg-opacity-50  rounded"
-                    onPress={toggleFlash}
-                >
-                    {flashState ? (
-                        <Ionicons name="flash" size={35} color="white" />
-                    ) : (
-                        <Ionicons name="flash-off" size={35} color="white" />
-                    )}
-                </TouchableOpacity>
-                <Button
-                    title="Scan Again? "
-                    onPress={() => {
-                        setScanned(true);
-                    }}
-                />
+            <View className="flex-1 justify-center items-center">
+
+                <View className="w-60 h-60 border-4 border-white rounded-xl absolute" />
+
+                <View className="absolute top-0 right-0 mt-60 mr-2">
+                    <TouchableOpacity onPress={toggleFlash}>
+                        {flashState ? (
+                            <Ionicons name="flash" size={35} color="white" />
+                        ) : (
+                            <Ionicons name="flash-off" size={35} color="white" />
+                        )}
+                    </TouchableOpacity>
+                </View>
+                
+                <View className="absolute bottom-10 self-center">
+                    <Button
+                        mode="outlined"
+                        onPress={() => setScanned(true)}
+                    >
+                        <Text className="text-xl text-cyan-600">Scan Again?</Text>
+                    </Button>
+                </View>
             </View>
         </CameraView>
     );

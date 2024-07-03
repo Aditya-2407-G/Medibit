@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { pickFile } from "../../components/filePicker";
 import { UploadToORG } from "../../components/FileTranferToOrgDb";
@@ -20,19 +20,28 @@ const Transfer = () => {
     const [fileName, setFileName] = useState<string>("");
     const [fileType, setFileType] = useState<string>("");
     const [fileSize, setFileSize] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleFilePickup = () => {
         pickFile(setFileName, setFileSize, setFileUri, setFileType);
     };
-    const handleFileUpload = () => {
-        UploadToORG(fileUri, fileName, fileType, fileSize, coi, di, ofci, si);
+
+    const handleFileUpload = async () => {
+        setIsLoading(true);
+        try {
+            await UploadToORG(fileUri, fileName, fileType, fileSize, coi, di, ofci, si);
+        } catch (error) {
+            console.log("Error uploading file:", error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
         <SafeAreaView className="flex-1 flex-col bg-primary justify-evenly p-10">
             <View>
-                <Text className="text-white text-center text-3xl font-semibold ">
-                    Sending files to{" "}
+                <Text className="text-white text-center text-3xl font-semibold">
+                    Sending files to
                 </Text>
                 <Text className="text-white text-center text-3xl mt-10 font-semibold">
                     {n}
@@ -45,21 +54,24 @@ const Transfer = () => {
                 containerStyles={undefined}
                 textStyles={undefined}
                 isLoading={false}
-            ></CustomButton>
+            />
 
-            <CustomButton
-                title="Upload file"
-                handlePress={handleFileUpload}
-                containerStyles="mb-20"
-                textStyles={undefined}
-                isLoading={false}
-            ></CustomButton>
+            {isLoading ? (
+                <ActivityIndicator size="large" color="#ffffff" />
+            ) : (
+                <CustomButton
+                    title="Upload file"
+                    handlePress={handleFileUpload}
+                    containerStyles="mb-20"
+                    textStyles={undefined}
+                    isLoading={false}
+                />
+            )}
         </SafeAreaView>
     );
 };
 
 export default Transfer;
-
 // ept: appwriteConfig.endpoint,                                 // endpoint -ept
 // pf: appwriteConfig.platform,                                 // platform -pf
 // pi: appwriteConfig.projectId,                               // projectId -pi

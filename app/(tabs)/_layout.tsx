@@ -1,10 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import { Redirect, Tabs } from "expo-router";
-
 import { icons } from "../../constants";
 import { Loader } from "../../components/Loader";
 import { useGlobalContext } from "../../context/GlobalContextProvider";
 import { TabIcon } from "@/components/TabIcon";
+import { View } from "react-native";
+import { Text } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const TabLayout = () => {
     const { loading, isLogged } = useGlobalContext();
@@ -26,9 +28,9 @@ const TabLayout = () => {
                         borderTopWidth: -1,
                         height: 70,
                         borderRadius: 100,
-                        position: 'absolute',
+                        position: "absolute",
                         bottom: 20, // Adjust this value to move the tab bar up
-                        left: 10,  // Add padding from left
+                        left: 10, // Add padding from left
                         right: 10, // Add padding from right
                     },
                 }}
@@ -50,23 +52,25 @@ const TabLayout = () => {
                         ),
                     }}
                 />
+
                 <Tabs.Screen
-                    name="Workout"
+                    name="Scanner"
                     options={{
-                        title: "Workout",
+                        title: "Scanner",
                         headerShown: false,
+                        tabBarStyle: { display: "none" },
                         tabBarIcon: ({ color, focused }) => (
-                            <TabIcon
-                                icon={icons.crossfit}
-                                color={color}
-                                name="Workout"
-                                focused={focused}
-                                containerStyle="w-6 h-6"
-                                iconStyle="gap-2"
-                            />
+                            <View className="">
+                                <MaterialCommunityIcons
+                                    name="qrcode-scan"
+                                    size={40}
+                                    color={color}
+                                />
+                            </View>
                         ),
                     }}
                 />
+
                 <Tabs.Screen
                     name="Profile"
                     options={{

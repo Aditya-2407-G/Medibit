@@ -18,6 +18,9 @@ module.exports = {
         gray: {
           100: "#CDCDE0",
         },
+        buttonclr: {
+          DEFAULT: "#3A83F4",
+        },
       },
     },
   },

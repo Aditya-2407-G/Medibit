@@ -15,11 +15,13 @@ import crossfit from "../assets/icons/crossfit.png";
 import download from "../assets/icons/download.png";
 import cross from "../assets/icons/cross.png";
 import refresh from "../assets/icons/refresh.png";
+import scanner from "../assets/icons/scanner.png";
 export default {
   play,
   bookmark,
   home,
   plus,
+  scanner,
   profile,
   leftArrow,
   menu,
