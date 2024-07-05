@@ -15,7 +15,7 @@ Instead of carrying a pile of documents, users can scan a QR code of the hospita
 
 Screens of the Medibit application can be found at - 
 
-- https://drive.google.com/drive/folders/1ayBHu7x1b0o0b25MdsFM1FuB7jfoXYzF?usp=sharing)
+- https://drive.google.com/drive/folders/1ayBHu7x1b0o0b25MdsFM1FuB7jfoXYzF?usp=sharing
 
 Screens of the Medibit Manager application can be found at - 
 
