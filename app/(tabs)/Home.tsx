@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-    ImageBackground,
-    Text,
-    TouchableOpacity,
-    View,
-    Dimensions,
-    ScrollView,
-} from "react-native";
+import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -16,10 +9,8 @@ const Home = () => {
     const [name, setName] = useState("");
 
     useEffect(() => {
-        getAccount().then((user) => {
-            if (user) {
-                setName(user.name);
-            }
+        getAccount().then((res) => {
+            setName(res.name);
         });
     }, []);
 
@@ -33,27 +24,30 @@ const Home = () => {
 
     return (
         <SafeAreaView className="flex-1">
-                <ImageBackground
-                    source={require("../../assets/images/bgimage.jpg")}
-                    className="w-full h-[30vh]"
-                >
 
-                    <Text className="text-white text-center text-3xl font-extrabold mt-20">
-                        Welcome Back !
-                    </Text>
-                    <Text className="text-white text-center text-3xl font-extrabold mt-2">{name}</Text>
-                    
+            <ImageBackground
+                source={require("../../assets/images/bgimage.jpg")}
+                className="w-full h-[30vh]"
+            >
+                <Text className="text-white text-center text-3xl font-extrabold mt-20">
+                    Welcome Back !
+                </Text>
 
-                </ImageBackground>
+                <Text className="text-white text-center text-3xl font-extrabold mt-2">
+                    {name}
+                </Text>
 
-            <View className="bg-slate-900 rounded-t-3xl mt-[-30px] p-5 h-full">
-                <Text className="text-white text-xl font-semibold mb-5">
+            </ImageBackground>
+
+            <View className="flex-1 bg-slate-900 rounded-t-3xl mt-[-30px] p-5">
+
+                <Text className="text-white text-xl font-semibold mt-5">
                     What would you like to do today?
                 </Text>
 
-                <View className="mt-10">
+                <View className="flex-row justify-between mt-[100px]">
                     <TouchableOpacity
-                        className="items-center bg-buttonclr rounded-lg p-4 mb-4"
+                        className="flex-1 items-center bg-buttonclr rounded-lg p-4 mr-2"
                         onPress={handleDisplayDocuments}
                     >
                         <MaterialCommunityIcons
@@ -61,36 +55,22 @@ const Home = () => {
                             size={24}
                             color="white"
                         />
-                        <Text className="ml-4 text-base text-white">
+                        <Text className="mt-2 text-base text-white text-center">
                             View Saved Documents
                         </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        className="items-center bg-buttonclr rounded-lg p-4 mb-4"
-                        onPress={handleDocuments}   
+                        className="flex-1 items-center bg-buttonclr rounded-lg p-4 ml-2"
+                        onPress={handleDocuments}
                     >
                         <MaterialCommunityIcons
                             name="file-plus-outline"
                             size={24}
                             color="white"
                         />
-                        <Text className="ml-4 text-base text-white">
+                        <Text className="mt-2 text-base text-white text-center">
                             Save Documents
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        className="items-center bg-buttonclr rounded-lg p-4 mb-4"
-                        onPress={handleDisplayDocuments}
-                    >
-                        <MaterialCommunityIcons
-                            name="hospital-box"
-                            size={24}
-                            color="white"
-                        />
-                        <Text className="ml-4 text-base text-white">
-                            Search Hospitals Near You
                         </Text>
                     </TouchableOpacity>
                 </View>

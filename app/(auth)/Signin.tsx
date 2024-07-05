@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, ToastAndroid } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
@@ -32,8 +32,8 @@ const SignIn = () => {
 
             setUser(result);
             setIsLogged(true);
-
-            Alert.alert("Success", "Logged in successfully");
+            ToastAndroid.show("Logged in successfully", ToastAndroid.SHORT);
+            
             router.replace("/Home");
         } catch (error: any) {
             Alert.alert(error.message);
@@ -63,7 +63,7 @@ const SignIn = () => {
                     <FormField
                         title="Email"
                         value={form.email}
-                        placeholder="Email"
+                        placeholder="final@gmail.com"
                         handleChangeText={(e) => setForm({ ...form, email: e })}
                         otherStyles="mt-7"
                         keyboardType="email-address"
@@ -71,7 +71,7 @@ const SignIn = () => {
                     <FormField
                         title="Password"
                         value={form.password}
-                        placeholder="Password"
+                        placeholder="12345678"
                         handleChangeText={(e) =>
                             setForm({ ...form, password: e })
                         }

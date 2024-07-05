@@ -2,13 +2,21 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import React, { useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { Button } from "react-native-paper";
 
 const ScanQR = () => {
     const [permission, requestPermission] = useCameraPermissions();
     const [flashState, setFlashState] = useState(false);
     const [scanned, setScanned] = useState(true);
+
+    useFocusEffect(() => {
+        Alert.alert(
+            "How to Use QR Scanner",
+            "1. Position the QR of the Hospital.\n2. Hold your device steady.\n3. The app will automatically scan the QR of the hospital.\n4. You can toggle the flash if needed.",
+            [{ text: "Got it", onPress: () => setScanned(true) }]
+        );
+    });
 
     if (!permission) {
         // Camera permissions are still loading.
@@ -74,6 +82,8 @@ const ScanQR = () => {
                         )}
                     </TouchableOpacity>
                 </View>
+
+                
                 
                 <View className="absolute bottom-10 self-center">
                     <Button
