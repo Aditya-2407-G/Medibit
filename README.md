@@ -1,53 +1,79 @@
-# This is a complete revamp of the older version of the app, currently working on it. Will soon provide the new apk link !!! 
+
+# Medibit
+
+Medibit is a React Native application developed with Expo and Appwrite that simplifies the process of transferring medical files to hospitals.
+
+Instead of carrying a pile of documents, users can scan a QR code of the hospital and send the files directly, reducing the hassle of managing physical documents.
+
+## Features
+
+- Seamless File Transfer: Transfer medical files to hospitals by - scanning a QR code.
+- Centralized Medical Data: Store prescriptions, lab reports, and other medical documents in one place for easy access.
+- User-Friendly Interface: Intuitive and easy-to-navigate UI developed with React Native and Expo.
+
+## Screenshots
+
+Screens of the Medibit application can be found at - 
+
+- https://drive.google.com/drive/folders/1ayBHu7x1b0o0b25MdsFM1FuB7jfoXYzF?usp=sharing)
+
+Screens of the Medibit Manager application can be found at - 
+
+- https://drive.google.com/drive/folders/1p7gyb-kFN-fEcl4r5HMpFuO9ZsWngWly?usp=sharing
 
 
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+## Usage/Examples
 
-1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+- Register or Log in: Create an account or log in to access the app.
+- Store Medical Data: Upload and manage your medical documents in the app.
+- Scan QR Code: Use the app to scan the hospital's QR code to transfer files.
 
-2. Start the app
 
-   ```bash
-    npx expo start
-   ```
 
-In the output, you'll find options to open the app in a
+## Installation
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+1. Clone the repository:
 
 ```bash
-npm run reset-project
+  npm install my-project
+  cd my-project
 ```
+2. Install dependencies:
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+```bash
+  npm install my-project
+  cd my-project
+```
+3. Start the application:
 
-## Learn more
+```bash
+  npm install my-project
+  cd my-project
+```
+    
+## Contributing
 
-To learn more about developing your project with Expo, look at the following resources:
+Contributions are always welcome!
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+1. Fork the repository.
+2. Create your feature branch:
 
-## Join the community
+```bash
+git checkout -b feature/AmazingFeature
+```
+3. Commit your changes:
 
-Join our community of developers creating universal apps.
+```bash
+git commit -m 'Add some AmazingFeature'
+```
+4. Push to the branch:
+```bash
+git push origin feature/AmazingFeature
+```
+5. Open a pull request
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
