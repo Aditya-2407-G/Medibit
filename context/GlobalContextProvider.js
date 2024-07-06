@@ -12,7 +12,7 @@ const GlobalContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getAccount()
+        getCurrentUser()
             .then((res) => {
                 if (res) {
                     setIsLogged(true);
@@ -32,7 +32,7 @@ const GlobalContextProvider = ({ children }) => {
 
     return (
         <GlobalContext.Provider
-            value={{ isLogged, setIsLogged, user, setUser, loading }}
+            value={{ isLogged, setIsLogged, user, setUser, loading, setLoading }}
         >
             <PaperProvider>{children}</PaperProvider>
         </GlobalContext.Provider>

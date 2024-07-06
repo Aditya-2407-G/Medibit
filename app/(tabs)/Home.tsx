@@ -4,14 +4,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { getAccount } from "@/lib/appwrite";
+import { useGlobalContext } from "@/context/GlobalContextProvider";
 
 const Home = () => {
+    const {user} = useGlobalContext();
     const [name, setName] = useState("");
 
     useEffect(() => {
-        getAccount().then((res) => {
-            setName(res.name);
-        });
+        setName(user?.username || "Howdy!")
     }, []);
 
     const handleDocuments = () => {

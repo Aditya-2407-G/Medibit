@@ -21,6 +21,7 @@ const Profile = () => {
     const [confirmpassword, setConfirmPassword] = useState("");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [image, setImage] = useState("https://www.w3schools.com/w3images/avatar6.png");
 
 
 
@@ -31,7 +32,6 @@ const Profile = () => {
         setNewPassword("");
         setConfirmPassword("");
     }
-
 
     const logout = async () => {
         await siguOut();
@@ -61,10 +61,9 @@ const Profile = () => {
 
 
     useEffect(() => {
-        getAccount().then((res) => {
-            setName(res.name);
-            setEmail(res.email);
-        })
+        setName(user?.username);
+        setEmail(user?.email);
+        setImage(user?.avatar);
     })
 
     return (
@@ -78,7 +77,16 @@ const Profile = () => {
                 <View className="mt-10">
 
                     <View className="bg-gray-800 rounded-lg p-6 mb-8">
-                        <Text className="text-white text-center text-xl font-bold mb-2">
+                    <Image
+                            source={{ uri: image }}
+                            style={{
+                                width: 100,
+                                height: 100,
+                                borderRadius: 50,
+                                alignSelf: "center",
+                            }}
+                        />
+                        <Text className="text-white text-center text-xl font-bold mb-2 mt-2">
                             {name}
                         </Text>
                         <Text className="text-gray-400 text-center text-lg">
@@ -105,6 +113,7 @@ const Profile = () => {
                     >
                         <Text>Logout</Text>
                     </Button>
+
                 </View>
 
                 <Portal>

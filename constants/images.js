@@ -1,4 +1,4 @@
 import bgimage from "../assets/images/bgimage.jpg"
 
-
-export default { bgimage };
+import avatar6 from "../assets/images/avatar6.png";
+export default { bgimage, avatar6 };
